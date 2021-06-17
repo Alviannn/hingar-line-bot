@@ -31,3 +31,8 @@ export abstract class Command {
     public abstract execute(event: MessageEvent, args: string[]): Promise<void>;
 
 }
+
+export type Links = {
+    dokumentasi: string,
+    absensi: string
+};

@@ -3,7 +3,6 @@ import { WebhookEvent } from '@line/bot-sdk';
 
 import dotenv from 'dotenv';
 import express from 'express';
-import got from 'got';
 
 import * as handlers from './handlers';
 import { InfoCommand } from './commands/info';
@@ -55,23 +54,12 @@ app.post('/webhook', line.middleware(config), async (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-async function keepAlive() {
-    const link = `127.0.0.1:${port}`;
-    try {
-        await got.get(link, { headers: { 'user-agent': 'Mozilla/5.0' } });
-        console.log('[Status]: is alive and well...');
-    } catch (err) {
-        console.log('[Status]: Failed to keep alive the server!!');
-    }
-}
-
 app.listen(port, () => {
     console.log(`Bot is live at port ${port}`);
 
     handlers.registerCommandEvent(client);
     handlers.registerCommand(new InfoCommand('info', ['hello'], client));
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'dok'], client));
-    // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
 
-    setInterval(keepAlive, 5 * 60 * 1000);
+    // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
 });
