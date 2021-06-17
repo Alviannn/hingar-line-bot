@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { Links } from './types';
 
-const adminFilePath = '../db/admins.json';
+const adminFilePath = './db/admins.json';
+const linksFilePath = './db/links.json';
 
 /**
  * gets all registered admins
@@ -40,6 +41,6 @@ export function registerAdmin(userId: string): void {
  * gets the {@link Links} object
  */
 export function getLinks(): Links {
-    const content = fs.readFileSync('../db/links.json', { encoding: 'utf8' });
+    const content = fs.readFileSync(linksFilePath, { encoding: 'utf8' });
     return JSON.parse(content);
 }
