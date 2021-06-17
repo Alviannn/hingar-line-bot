@@ -5,7 +5,8 @@
     "main": "dist/app.js",
     "scripts": {
         "start": "node dist/app.js",
-        "compile": "node cleaner.js && tsc"
+        "compile": "node cleaner.js && tsc",
+        "clean": "node cleaner.js"
     },
     "keywords": [
         "line",
