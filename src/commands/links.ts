@@ -1,6 +1,6 @@
 import { MessageEvent } from "@line/bot-sdk";
-import * as db from '../db';
-import { Command } from "../types";
+import * as db from '../utils/db';
+import { Command } from "../utils/types";
 
 export class LinksCommand extends Command {
 

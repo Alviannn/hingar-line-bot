@@ -3,6 +3,7 @@ import { Links } from './types';
 
 const adminFilePath = './db/admins.json';
 const linksFilePath = './db/links.json';
+const groupsFilePath = './db/groups.json';
 
 /**
  * gets all registered admins
@@ -42,5 +43,13 @@ export function registerAdmin(userId: string): void {
  */
 export function getLinks(): Links {
     const content = fs.readFileSync(linksFilePath, { encoding: 'utf8' });
+    return JSON.parse(content);
+}
+
+/**
+ * gets the all whitelisted groups
+ */
+export function getGroups(): string[] {
+    const content = fs.readFileSync(groupsFilePath, { encoding: 'utf8' });
     return JSON.parse(content);
 }

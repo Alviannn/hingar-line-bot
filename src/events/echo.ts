@@ -1,6 +1,6 @@
 import * as line from '@line/bot-sdk';
 import { WebhookEvent } from '@line/bot-sdk';
-import { BotEvent } from '../types';
+import { BotEvent } from '../utils/types';
 
 export class EchoMessageEvent extends BotEvent {
 

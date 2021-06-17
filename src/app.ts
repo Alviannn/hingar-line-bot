@@ -4,7 +4,7 @@ import { WebhookEvent } from '@line/bot-sdk';
 import dotenv from 'dotenv';
 import express from 'express';
 
-import * as handlers from './handlers';
+import * as handlers from './utils/handlers';
 import { InfoCommand } from './commands/info';
 import { LinksCommand } from './commands/links';
 

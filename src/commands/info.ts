@@ -1,5 +1,5 @@
 import { MessageEvent } from "@line/bot-sdk";
-import { Command } from "../types";
+import { Command } from "../utils/types";
 
 export class InfoCommand extends Command {
 
@@ -14,12 +14,13 @@ export class InfoCommand extends Command {
         await this.client.replyMessage(event.replyToken, {
             type: 'text',
             text:
-                'I am the official HINGAR bot! I am made by Alviannn... Arigatou!\n' +
+                'I am the official HINGAR bot!\n' +
+                'So... ariga-thanks for using this bot! \n' +
                 '\n' +
                 '```\n' +
-                `Group ID: ${source.type === 'group' ? source.groupId : 'none'}\n` +
-                `Room ID: ${source.type === 'room' ? source.roomId : 'none'}\n` +
-                `User ID: ${source.userId}\n` +
+                `This group ID: ${source.type === 'group' ? source.groupId : 'none'}\n` +
+                `This room ID : ${source.type === 'room' ? source.roomId : 'none'}\n` +
+                `Your user ID : ${source.userId}\n` +
                 '```\n'
         });
     }
