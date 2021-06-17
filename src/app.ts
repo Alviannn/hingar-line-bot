@@ -1,18 +1,13 @@
 import * as line from '@line/bot-sdk';
 import { WebhookEvent } from '@line/bot-sdk';
-
 import dotenv from 'dotenv';
 import express from 'express';
-
-import * as handlers from './utils/handlers';
 import { InfoCommand } from './commands/info';
 import { LinksCommand } from './commands/links';
+import * as handlers from './utils/handlers';
+import * as db from './utils/db';
 
 dotenv.config();
-
-// todo:
-//  - 1. Jadwal jum'at (jam 2) dan sabtu (jam 11 dan 1)
-//  - 2. Provide link dokumentasi
 
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN!,
@@ -60,6 +55,21 @@ app.listen(port, () => {
     handlers.registerCommandEvent(client);
     handlers.registerCommand(new InfoCommand('info', ['hello'], client));
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'dok'], client));
+
+    setInterval(async () => {
+        const time = handlers.asiaTime();
+        const currentDate = time.toFormat('yyyy-MM-dd');
+
+        if (db.isDateChecked(currentDate)) {
+            return;
+        }
+
+        if (time.weekday === 5 && time.hour === 14) {
+            // todo: post reminder
+        } else if (time.weekday === 6 && (time.hour === 11 || time.hour === 13)) {
+            // todo: post reminder
+        }
+    }, 5_000);
 
     // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
 });

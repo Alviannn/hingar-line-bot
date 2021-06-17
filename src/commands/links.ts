@@ -4,7 +4,7 @@ import { Command } from "../utils/types";
 
 export class LinksCommand extends Command {
 
-    public async execute(event: MessageEvent, args: string[]): Promise<void> {
+    public async execute(event: MessageEvent): Promise<void> {
         const msg = event.message;
         const sender = event.source.userId!;
 

@@ -2,9 +2,10 @@ import * as line from '@line/bot-sdk';
 import { Client, WebhookEvent } from '@line/bot-sdk';
 import * as db from '../utils/db';
 import { BotEvent, Command } from './types';
+import { DateTime } from 'luxon';
 
 const events: BotEvent[] = [];
-const commands: Map<string, Command> = new Map();
+const commands: Command[] = [];
 
 /**
  * The event handler for command executions
@@ -38,9 +39,7 @@ class CommandEvent extends BotEvent {
         }
 
         const subcmd = args.shift()!.toLowerCase();
-        const cmdList = new Array(...commands.values());
-
-        const currcmd = cmdList.find((cmd) => {
+        const currcmd = commands.find((cmd) => {
             if (cmd.name === subcmd || cmd.aliases.includes(subcmd)) {
                 return cmd;
             }
@@ -57,7 +56,7 @@ class CommandEvent extends BotEvent {
  * registers a command to the bot
  */
 export function registerCommand(cmd: Command): void {
-    commands.set(cmd.name, cmd);
+    commands.push(cmd);
     console.log(`[Handler]: Registered command ${cmd.name}`);
 }
 
@@ -79,6 +78,14 @@ export function registerCommandEvent(client: Client): void {
  * handles all incoming events from the LINE webhook receiver
  */
 export async function handleEvent(event: WebhookEvent): Promise<void> {
-    events.filter((be) => be.type === event.type)
-        .map(async (be) => await be.call(event));
+    events
+        .filter((ev) => ev.type === event.type)
+        .map(async (ev) => await ev.call(event));
+}
+
+/**
+ * gets the current asian time
+ */
+export function asiaTime(): DateTime {
+    return DateTime.utc().setZone('Asia/Bangkok', { keepLocalTime: false });
 }

@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import fs from 'fs';
 import { Links } from './types';
+import path from 'path';
 
-const adminFilePath = './db/admins.json';
-const linksFilePath = './db/links.json';
-const groupsFilePath = './db/groups.json';
+const adminPath = path.resolve('./db/admins.json');
+const linksPath = path.resolve('./db/links.json');
+const groupsPath = path.resolve('./db/groups.json');
+const checkedDatePath = path.resolve('./db/checked-date.json');
 
 /**
  * gets all registered admins
  */
 export function getAdmins(): string[] {
-    const content = fs.readFileSync(adminFilePath, { encoding: 'utf8' });
-
     try {
-        return JSON.parse(content);
+        return require(adminPath);
     } catch (err) {
         return [];
     }
@@ -26,30 +28,37 @@ export function isAdmin(userId: string): boolean {
 }
 
 /**
- * registers a user as an admin
- */
-export function registerAdmin(userId: string): void {
-    const admins = getAdmins();
-    if (admins.includes(userId)) {
-        return;
-    }
-
-    admins.push(userId);
-    fs.writeFileSync(adminFilePath, JSON.stringify(admins), { encoding: 'utf8' });
-}
-
-/**
- * gets the {@link Links} object
+ * gets the Links object
  */
 export function getLinks(): Links {
-    const content = fs.readFileSync(linksFilePath, { encoding: 'utf8' });
-    return JSON.parse(content);
+    return require(linksPath);
 }
 
 /**
  * gets the all whitelisted groups
  */
 export function getGroups(): string[] {
-    const content = fs.readFileSync(groupsFilePath, { encoding: 'utf8' });
-    return JSON.parse(content);
+    return require(groupsPath);
+}
+
+/**
+ * checks if a date is checked (as in registered as already posted reminder)
+ */
+export function isDateChecked(time: string): boolean {
+    const parsed: string[] = require(checkedDatePath);
+    return parsed.includes(time);
+}
+
+/**
+ * registers a date time to the checked dates (view `isDateChecked` for more info)
+ */
+export function checkDate(time: string): void {
+    if (isDateChecked(time)) {
+        return;
+    }
+
+    const parsed: string[] = require(checkedDatePath);
+    parsed.push(time);
+
+    fs.writeFileSync(checkedDatePath, JSON.stringify(parsed, null, 4), { encoding: 'utf8' });
 }

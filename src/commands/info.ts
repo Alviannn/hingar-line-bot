@@ -3,7 +3,7 @@ import { Command } from "../utils/types";
 
 export class InfoCommand extends Command {
 
-    public async execute(event: MessageEvent, args: string[]): Promise<void> {
+    public async execute(event: MessageEvent): Promise<void> {
         const msg = event.message;
         const source = event.source;
 
@@ -17,11 +17,9 @@ export class InfoCommand extends Command {
                 'I am the official HINGAR bot!\n' +
                 'So... ariga-thanks for using this bot! \n' +
                 '\n' +
-                '```\n' +
                 `This group ID: ${source.type === 'group' ? source.groupId : 'none'}\n` +
                 `This room ID : ${source.type === 'room' ? source.roomId : 'none'}\n` +
-                `Your user ID : ${source.userId}\n` +
-                '```\n'
+                `Your user ID : ${source.userId}`
         });
     }
 
