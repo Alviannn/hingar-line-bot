@@ -5,6 +5,9 @@ import { BotEvent, Command } from './types';
 const events: BotEvent[] = [];
 const commands: Map<string, Command> = new Map();
 
+/**
+ * The event handler for command executions
+ */
 class CommandEvent extends BotEvent {
 
     public async call(event: WebhookEvent): Promise<void> {
@@ -40,19 +43,31 @@ class CommandEvent extends BotEvent {
 
 }
 
+/**
+ * registers a command to the bot
+ */
 export function registerCommand(cmd: Command): void {
     commands.set(cmd.name, cmd);
     console.log(`[Handler]: Registered command ${cmd.name}`);
 }
 
+/**
+ * registers an event to the bot
+ */
 export function registerEvent(event: BotEvent): void {
     events.push(event);
 }
 
+/**
+ * registers the command event to the bot
+ */
 export function registerCommandEvent(client: Client): void {
     registerEvent(new CommandEvent(client, 'message'));
 }
 
+/**
+ * handles all incoming events from the LINE webhook receiver
+ */
 export async function handleEvent(event: WebhookEvent): Promise<void> {
     events.filter((be) => be.type === event.type)
         .map(async (be) => await be.call(event));
