@@ -1,5 +1,6 @@
 import * as line from '@line/bot-sdk';
-import { WebhookEvent, Client } from '@line/bot-sdk';
+import { Client, WebhookEvent } from '@line/bot-sdk';
+import * as db from '../utils/db';
 import { BotEvent, Command } from './types';
 
 const events: BotEvent[] = [];
@@ -17,8 +18,17 @@ class CommandEvent extends BotEvent {
             return;
         }
 
-        const { message: msg } = event;
+        const { message: msg, source } = event;
         const { text } = msg;
+
+        // commands can only be executed in groups
+        if (source.type !== 'group') {
+            return;
+        }
+        // prevents from executing to a non-whitelisted groups
+        if (!db.getGroups().includes(source.groupId)) {
+            return;
+        }
 
         const args = text.split(' ');
         const prefix = args.shift()!.toLowerCase();
