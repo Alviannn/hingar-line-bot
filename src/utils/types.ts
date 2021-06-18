@@ -59,7 +59,4 @@ export type Groups = {
     public: string
 };
 
-export type Admins = {
-    alvian: string,
-    fajar: string
-}
+export type Admins = Record<string, string>;

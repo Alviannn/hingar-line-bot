@@ -5,6 +5,7 @@ import express from 'express';
 import { DebugCommand } from './commands/debug';
 import { LinksCommand } from './commands/links';
 import { BotJoinEvent } from './events/join';
+import { ReceiveMessageEvent } from './events/message';
 import * as db from './utils/db';
 import * as handlers from './utils/handlers';
 
@@ -58,11 +59,9 @@ app.listen(port, () => {
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'doc', 'dokumentasi', 'dok', 'absensi', 'absen'], client));
 
     handlers.registerEvent(new BotJoinEvent(client, 'join'));
-    // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
+    handlers.registerEvent(new ReceiveMessageEvent(client, 'message'));
 
     setInterval(async () => {
-        console.log('[REPORT]: Reminder interval is working!');
-
         const time = handlers.asiaTime();
         const currentDate = time.toFormat('yyyy-MM-dd HH');
 
@@ -70,30 +69,47 @@ app.listen(port, () => {
             return;
         }
 
-        console.log(`[REPORT]: Current date isn't checked -> ${currentDate}`);
+        const messages = {
+            notToday:
+                `Halo teman-teman, cuma mau mengingatkan kembali jadwal HINGAR Mentoring.
+                Jangan lupa ya!
 
-        const rawText =
-            `Halo teman-teman, cuma mau mengingatkan kembali jadwal HINGAR Mentoring kita ini.
-            Jangan lupa ya!
+                Jadwal:
+                22 Mei 13:00 - 15:00
+                29 Mei 13:00 - 15:00
+                5 Juni 13:00 - 15:00
+                12 Juni 13:00 - 15:00
+                19 Juni 13:00 - 15:00
+                26 Juni 13:00 - 15:00
+                3 Juli 13:00 - 15:00
+                10 Juli 13:00 - 15:00`.split('                ').join(''),
+            today:
+                `Halo teman-teman HINGAR, cuma mau mengingatkan kembali jadwal HINGAR Mentoring kita hari ini jam 13:00 - 15:00.
+                So..., Jangan lupa ya!
 
-            Jadwal:
-            22 Mei 13:00 - 15:00
-            29 Mei 13:00 - 15:00
-            5 Juni 13:00 - 15:00
-            12 Juni 13:00 - 15:00
-            19 Juni 13:00 - 15:00
-            26 Juni 13:00 - 15:00
-            3 Juli 13:00 - 15:00
-            10 Juli 13:00 - 15:00`.split('            ').join('');
-
-        const message: line.Message = { type: 'text', text: rawText };
-        const groupTarget = db.getGroups()['test'];
+                Jadwal-Lengkap:
+                22 Mei 13:00 - 15:00
+                29 Mei 13:00 - 15:00
+                5 Juni 13:00 - 15:00
+                12 Juni 13:00 - 15:00
+                19 Juni 13:00 - 15:00
+                26 Juni 13:00 - 15:00
+                3 Juli 13:00 - 15:00
+                10 Juli 13:00 - 15:00`.split('                ').join('')
+        };
 
         const { weekday, hour } = time;
         const shouldPost = (weekday === 5 && hour === 14) || (weekday === 6 && (hour === 11 || hour === 13));
 
         if (shouldPost) {
-            await client.pushMessage(groupTarget, message);
+            const message: line.Message = {
+                type: 'text',
+                text: weekday === 6 ? messages.today : messages.notToday
+            };
+
+            const target = db.getGroups()['public'];
+
+            await client.pushMessage(target, message);
             db.checkDate(currentDate);
         }
     }, 30_000);
