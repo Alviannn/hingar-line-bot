@@ -16,7 +16,7 @@ export class DebugCommand extends Command {
             text:
                 `This group ID: ${source.type === 'group' ? source.groupId : 'none'}\n` +
                 `This room ID: ${source.type === 'room' ? source.roomId : 'none'}\n` +
-                `Your user ID: ${source.userId ?? 'none'}`
+                `Your user ID: ${source.userId ? source.userId : 'none'}`
         });
     }
 
