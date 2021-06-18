@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { InfoCommand } from './commands/info';
 import { LinksCommand } from './commands/links';
-import * as handlers from './utils/handlers';
 import * as db from './utils/db';
+import * as handlers from './utils/handlers';
 
 dotenv.config();
 
@@ -58,16 +58,35 @@ app.listen(port, () => {
 
     setInterval(async () => {
         const time = handlers.asiaTime();
-        const currentDate = time.toFormat('yyyy-MM-dd');
+        const currentDate = time.toFormat('yyyy-MM-dd HH');
 
         if (db.isDateChecked(currentDate)) {
             return;
         }
 
-        if (time.weekday === 5 && time.hour === 14) {
-            // todo: post reminder
-        } else if (time.weekday === 6 && (time.hour === 11 || time.hour === 13)) {
-            // todo: post reminder
+        const rawText =
+            `Halo teman-teman, cuma mau mengingatkan kembali jadwal HINGAR Mentoring kita ini.
+            Jangan lupa ya!
+
+            Jadwal:
+            22 Mei 13:00 - 15:00
+            29 Mei 13:00 - 15:00
+            5 Juni 13:00 - 15:00
+            12 Juni 13:00 - 15:00
+            19 Juni 13:00 - 15:00
+            26 Juni 13:00 - 15:00
+            3 Juli 13:00 - 15:00
+            10 Juli 13:00 - 15:00`.split('            ').join('');
+
+        const message: line.Message = { type: 'text', text: rawText };
+        const groupTarget = 'C2baeda158039c44064def056e6054d06';
+
+        const { weekday, hour } = time;
+        const shouldPost = (weekday === 5 && hour === 14) || (weekday === 6 && (hour === 11 || hour === 13));
+
+        if (shouldPost) {
+            await client.pushMessage(groupTarget, message);
+            db.checkDate(currentDate);
         }
     }, 5_000);
 
