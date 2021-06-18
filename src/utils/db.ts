@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import fs from 'fs';
-import { Links } from './types';
+import { Links, Admins, Groups } from './types';
 import path from 'path';
 
 const adminPath = path.resolve('./db/admins.json');
@@ -12,19 +12,16 @@ const checkedDatePath = path.resolve('./db/checked-date.json');
 /**
  * gets all registered admins
  */
-export function getAdmins(): string[] {
-    try {
-        return require(adminPath);
-    } catch (err) {
-        return [];
-    }
+export function getAdmins(): Admins {
+    return require(adminPath);
 }
 
 /**
  * determines whether a user is an admin
  */
 export function isAdmin(userId: string): boolean {
-    return getAdmins().includes(userId);
+    const userIds = Object.values(getAdmins());
+    return userIds.includes(userId);
 }
 
 /**
@@ -37,7 +34,7 @@ export function getLinks(): Links {
 /**
  * gets the all whitelisted groups
  */
-export function getGroups(): string[] {
+export function getGroups(): Groups {
     return require(groupsPath);
 }
 

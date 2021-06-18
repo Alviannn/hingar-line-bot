@@ -52,3 +52,14 @@ export type Links = {
     dokumentasi: string,
     absensi: string
 };
+
+export type Groups = {
+    test: string,
+    panitia: string,
+    public: string
+};
+
+export type Admins = {
+    alvian: string,
+    fajar: string
+}

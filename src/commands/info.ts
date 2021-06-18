@@ -18,8 +18,8 @@ export class InfoCommand extends Command {
                 'So... ariga-thanks for using this bot! \n' +
                 '\n' +
                 `This group ID: ${source.type === 'group' ? source.groupId : 'none'}\n` +
-                `This room ID : ${source.type === 'room' ? source.roomId : 'none'}\n` +
-                `Your user ID : ${source.userId}`
+                `This room ID: ${source.type === 'room' ? source.roomId : 'none'}\n` +
+                `Your user ID: ${source.userId}`
         });
     }
 

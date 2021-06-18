@@ -83,7 +83,7 @@ app.listen(port, () => {
             10 Juli 13:00 - 15:00`.split('            ').join('');
 
         const message: line.Message = { type: 'text', text: rawText };
-        const groupTarget = 'C2baeda158039c44064def056e6054d06';
+        const groupTarget = db.getGroups()['test'];
 
         const { weekday, hour } = time;
         const shouldPost = (weekday === 5 && hour === 14) || (weekday === 6 && (hour === 11 || hour === 13));
