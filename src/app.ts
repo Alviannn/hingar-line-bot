@@ -57,7 +57,7 @@ app.listen(port, () => {
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'dok'], client));
 
     setInterval(async () => {
-        console.log('[REPORT]: Reminder interval is working every 5 seconds!');
+        console.log('[REPORT]: Reminder interval is working!');
 
         const time = handlers.asiaTime();
         const currentDate = time.toFormat('yyyy-MM-dd HH');
