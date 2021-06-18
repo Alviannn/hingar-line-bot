@@ -1,33 +1,36 @@
 import { MessageEvent } from "@line/bot-sdk";
+import assert from "assert";
 import * as db from '../utils/db';
 import { Command } from "../utils/types";
 
 export class LinksCommand extends Command {
 
     public async execute(event: MessageEvent): Promise<void> {
-        const msg = event.message;
-        const sender = event.source.userId!;
+        const { message: msg, source } = event;
 
         if (msg.type !== 'text') {
             return;
         }
 
-        if (db.isAdmin(sender)) {
-            const links = db.getLinks();
-            await this.client.pushMessage(sender, {
+        assert(source.type === 'group');
+        const { groupId } = source;
+
+        if (db.getGroups().panitia === groupId) {
+            const { absensi, dokumentasi } = db.getLinks();
+            await this.client.replyMessage(event.replyToken, {
                 type: 'text',
                 text:
                     `------------------\n` +
                     `\n` +
-                    `Absensi: ${links.absensi}\n` +
-                    `Dokumentasi: ${links.dokumentasi}\n` +
+                    `Absensi: ${absensi}\n` +
+                    `Dokumentasi: ${dokumentasi}\n` +
                     `\n` +
                     `------------------\n`
             });
         } else {
             await this.client.replyMessage(event.replyToken, {
                 type: 'text',
-                text: 'You are not qualified!'
+                text: 'This group is not qualified for that command!'
             });
         }
     }
