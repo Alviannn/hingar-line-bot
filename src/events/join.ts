@@ -17,9 +17,7 @@ export class BotJoinEvent extends BotEvent {
                 text:
                     'Hey! I have joined a new group!\n' +
                     '\n' +
-                    '```\n' +
-                    `${JSON.stringify(summary, null, 4)}\n` +
-                    '```'
+                    `${JSON.stringify(summary, null, 4)}\n`
             });
         }
     }
