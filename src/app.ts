@@ -92,7 +92,7 @@ app.listen(port, () => {
             await client.pushMessage(groupTarget, message);
             db.checkDate(currentDate);
         }
-    }, 5_000);
+    }, 30_000);
 
     // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
 });
