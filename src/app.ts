@@ -2,7 +2,7 @@ import * as line from '@line/bot-sdk';
 import { WebhookEvent } from '@line/bot-sdk';
 import dotenv from 'dotenv';
 import express from 'express';
-import { InfoCommand } from './commands/info';
+import { DebugCommand } from './commands/debug';
 import { LinksCommand } from './commands/links';
 import { BotJoinEvent } from './events/join';
 import * as db from './utils/db';
@@ -54,8 +54,8 @@ app.listen(port, () => {
     console.log(`Bot is live at port ${port}`);
 
     handlers.registerCommandEvent(client);
-    handlers.registerCommand(new InfoCommand('info', ['hello'], client));
-    handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'dok'], client));
+    handlers.registerCommand(new DebugCommand('debug', [], client));
+    handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'doc', 'dokumentasi', 'dok', 'absensi', 'absen'], client));
 
     handlers.registerEvent(new BotJoinEvent(client, 'join'));
     // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
