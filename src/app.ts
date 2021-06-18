@@ -62,6 +62,8 @@ app.listen(port, () => {
     handlers.registerEvent(new ReceiveMessageEvent(client, 'message'));
 
     setInterval(async () => {
+        console.log('[REPORT]: Reminder is still running!');
+
         const time = handlers.asiaTime();
         const currentDate = time.toFormat('yyyy-MM-dd HH');
 
