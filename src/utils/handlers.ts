@@ -27,9 +27,8 @@ class CommandEvent extends BotEvent {
             return;
         }
 
-        const groupIds = Object.values(db.getGroups());
         // prevents from executing to a non-whitelisted groups
-        if (!groupIds.includes(source.groupId)) {
+        if (!db.isGroupRegistered(source.groupId)) {
             return;
         }
 

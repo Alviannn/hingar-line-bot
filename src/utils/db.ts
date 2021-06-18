@@ -39,6 +39,14 @@ export function getGroups(): Groups {
 }
 
 /**
+ * checks whether a group is registered
+ */
+export function isGroupRegistered(groupId: string): boolean {
+    const groups = Object.values(getGroups());
+    return groups.includes(groupId);
+}
+
+/**
  * checks if a date is checked (as in registered as already posted reminder)
  */
 export function isDateChecked(time: string): boolean {

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { InfoCommand } from './commands/info';
 import { LinksCommand } from './commands/links';
+import { BotJoinEvent } from './events/join';
 import * as db from './utils/db';
 import * as handlers from './utils/handlers';
 
@@ -56,6 +57,9 @@ app.listen(port, () => {
     handlers.registerCommand(new InfoCommand('info', ['hello'], client));
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'dok'], client));
 
+    handlers.registerEvent(new BotJoinEvent(client, 'join'));
+    // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
+
     setInterval(async () => {
         console.log('[REPORT]: Reminder interval is working!');
 
@@ -93,6 +97,4 @@ app.listen(port, () => {
             db.checkDate(currentDate);
         }
     }, 30_000);
-
-    // handlers.registerEvent(new EchoMessageEvent(client, 'message'));
 });
