@@ -12,11 +12,11 @@ export class SendCommand extends Command {
         const { groupId } = source;
         const groups = db.getGroups();
 
-        if (groupId !== groups.panitia) {
+        if (groupId !== groups.test) {
             return;
         }
 
-        await this.client.pushMessage(groups.public, {
+        await this.client.pushMessage(groups.test, {
             type: 'text',
             text: args.join(' ')
         });

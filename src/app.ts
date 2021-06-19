@@ -9,6 +9,7 @@ import { ReceiveMessageEvent } from './events/message';
 import * as db from './utils/db';
 import * as handlers from './utils/handlers';
 import { InfoCommand } from './commands/info';
+import { SendCommand } from './commands/send';
 
 dotenv.config();
 
@@ -56,9 +57,11 @@ app.listen(port, () => {
     console.log(`Bot is live at port ${port}`);
 
     handlers.registerCommandEvent(client);
+
     handlers.registerCommand(new DebugCommand('debug', [], client));
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'doc', 'dokumentasi', 'dok', 'absensi', 'absen'], client));
     handlers.registerCommand(new InfoCommand('info', ['i', 'information', '?'], client));
+    handlers.registerCommand(new SendCommand('send', [], client));
 
     handlers.registerEvent(new BotJoinEvent(client, 'join'));
     handlers.registerEvent(new ReceiveMessageEvent(client, 'message'));
