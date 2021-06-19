@@ -16,7 +16,7 @@ export class SendCommand extends Command {
             return;
         }
 
-        if (!args) {
+        if (args.length === 0) {
             await this.client.replyMessage(event.replyToken, {
                 type: 'text',
                 text:
