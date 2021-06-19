@@ -12,7 +12,7 @@ export class InfoCommand extends Command {
 
         const message: FlexMessage = {
             type: 'flex',
-            altText: 'HINGAR flex message',
+            altText: 'Bot Information',
             contents: infoFlex
         };
 
