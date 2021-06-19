@@ -16,10 +16,19 @@ export class SendCommand extends Command {
             return;
         }
 
-        await this.client.pushMessage(groups.test, {
-            type: 'text',
-            text: args.join(' ')
-        });
+        if (!args) {
+            await this.client.replyMessage(event.replyToken, {
+                type: 'text',
+                text:
+                    'Invalid arguments!\n' +
+                    'Use: hingar send <message>\n'
+            });
+        } else {
+            await this.client.pushMessage(groups.test, {
+                type: 'text',
+                text: args.join(' ')
+            });
+        }
     }
 
 }
