@@ -8,6 +8,7 @@ import { BotJoinEvent } from './events/join';
 import { ReceiveMessageEvent } from './events/message';
 import * as db from './utils/db';
 import * as handlers from './utils/handlers';
+import { InfoCommand } from './commands/info';
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.listen(port, () => {
     handlers.registerCommandEvent(client);
     handlers.registerCommand(new DebugCommand('debug', [], client));
     handlers.registerCommand(new LinksCommand('links', ['link', 'url', 'docs', 'doc', 'dokumentasi', 'dok', 'absensi', 'absen'], client));
+    handlers.registerCommand(new InfoCommand('info', ['i', 'information', '?'], client));
 
     handlers.registerEvent(new BotJoinEvent(client, 'join'));
     handlers.registerEvent(new ReceiveMessageEvent(client, 'message'));

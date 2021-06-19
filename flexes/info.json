@@ -1,0 +1,68 @@
+{
+    "type": "bubble",
+    "size": "mega",
+    "hero": {
+        "type": "image",
+        "url": "https://sprofile.line-scdn.net/0heLlp1LAIOmNBCSxwEtVEHDFZOQlib2NnZDh8BH0NZFV7P3kwOGp3VXUIZAMsOXVhbj13A3cPYgZNGk0FX1_GV0Y5ZFR4Pn00amZ8gw",
+        "size": "full",
+        "aspectMode": "cover",
+        "aspectRatio": "20:13"
+    },
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "INFORMATION",
+                "weight": "bold",
+                "size": "xl",
+                "align": "center"
+            },
+            {
+                "type": "text",
+                "text": "Hello there! I am the official bot for BINUS HINGAR!\n\nI was made by Alvian DQ\nThe bot is open source and available on GitHub\n\nIf you have any suggestions for the bot feel free to let me know!",
+                "margin": "20px",
+                "wrap": true,
+                "size": "sm"
+            }
+        ]
+    },
+    "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "spacing": "sm",
+        "contents": [
+            {
+                "type": "image",
+                "url": "https://pngimg.com/uploads/github/github_PNG40.png",
+                "size": "50px",
+                "margin": "0px",
+                "offsetStart": "20px"
+            },
+            {
+                "type": "button",
+                "action": {
+                    "type": "uri",
+                    "label": "Source Code",
+                    "uri": "https://github.com/Alviannn/hingar-line-bot"
+                },
+                "margin": "0px",
+                "offsetEnd": "40px"
+            }
+        ],
+        "flex": 0,
+        "action": {
+            "type": "uri",
+            "label": "action",
+            "uri": "https://github.com/Alviannn/hingar-line-bot"
+        },
+        "cornerRadius": "30px",
+        "justifyContent": "center"
+    },
+    "styles": {
+        "body": {
+            "separator": false
+        }
+    }
+}
